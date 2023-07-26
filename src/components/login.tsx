@@ -51,7 +51,7 @@ const Login = () => {
       <div>
         <h5>登録してない人は下のリンクからお願いします。</h5>
         <>
-          <Link href={{ pathname: "/" }} legacyBehavior>
+          <Link href={{ pathname: "/registerPage" }} legacyBehavior>
             <a>登録はこちらから</a>
           </Link>
         </>
