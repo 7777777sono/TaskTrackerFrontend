@@ -4,22 +4,30 @@ import axios from "axios";
 
 // ログインのためのコンポーネント
 const Login = () => {
-  const [mail, setMail] = useState(""); // メールアドレス
+  // 何でも追加できるようにする
+  interface user {
+    [prop: string]: any;
+  }
+
+  const [email, setEmail] = useState(""); // メールアドレス
   const [password, setPassword] = useState(""); // パスワード
-  const [users, setUsers] = useState([]); // 登録されているユーザの情報を格納する変数
+  const [users, setUsers] = useState<user>([]); // 登録されているユーザの情報を格納する変数
 
   // 登録してあるユーザと入力情報が一致しているかを確認する関数
   const loginCheck = async () => {
-    await getUsers();
+    await postInputDatas();
   };
 
-  // ユーザの情報を得る関数
-  const getUsers = async () => {
+  // 入力した情報を送る関数
+  const postInputDatas = async () => {
     try {
-      // axios.getを使ってGETリクエストを送信
-      const response = await axios.get("http://127.0.0.1:4000/users");
+      // バックエンドでログイン処理
+      const response = await axios.post("http://127.0.0.1:4000/sessions", {
+        email: email,
+        password: password,
+      });
 
-      await setUsers(response.data);
+      await console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -31,8 +39,8 @@ const Login = () => {
         <h4>Gmail</h4>
         <input
           type="email"
-          value={mail}
-          onChange={(e) => setMail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       {/* パスワード入力 */}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Register = () => {
   type userInfoType = {
@@ -32,6 +33,7 @@ const Register = () => {
   const [googleAccountInfo, setGoogleAccountInfo] = useState<googleAccountInfo>(
     {}
   );
+  const router = useRouter();
 
   useEffect(() => {
     // 初回のレンダリング時は無視する
@@ -50,16 +52,17 @@ const Register = () => {
   }, [googleAccountInfo]);
 
   useEffect(() => {
-
     // ユーザ情報を送る関数
     const userDataPost = async () => {
       try {
-        // axios.getを使ってPOSTリクエストを送信
+        // axios.postを使ってPOSTリクエストを送信
         const response = await axios.post(
           "http://127.0.0.1:4000/users",
           registerUserInfo
         );
-        await console.log(response);
+        await alert(response.data.message);
+        // 登録の処理が終了したら最初のページ戻す。
+        router.push("/");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
