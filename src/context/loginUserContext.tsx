@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext } from "react";
 
 export const isLoginContext = createContext<any>([0, () => {}]);
 export const userContext = createContext<any>([0, () => {}]);
@@ -6,14 +6,6 @@ export const userContext = createContext<any>([0, () => {}]);
 export const LoginUserProvider = ({ children }: any) => {
   const [isLogin, setIsLogin] = useState(false); // ログインしているかどうかを判別する
   const [user, setUser] = useState({}); // ログインしたユーザの情報を格納するオブジェクト
-
-  // useEffect(() => {
-  //   console.log(isLogin);
-  // }, [isLogin]);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
 
   return (
     <>

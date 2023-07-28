@@ -1,6 +1,6 @@
 import Register from "../components/register";
 
-const RegisterPage = () => {
+const RegisterAndPasswordResetPage = () => {
   return (
     <>
       <Register></Register>
@@ -8,4 +8,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterAndPasswordResetPage;

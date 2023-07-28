@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../libs/firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
@@ -21,6 +21,7 @@ const Register = () => {
     useState(true); // (グーグルアカウントの情報のときの) 初回レンダリング時に無視するための変数
   const [registerUserIsFirstRender, setRegisterUserIsFirstRender] =
     useState(true); // (登録ユーザの情報のときの) 初回レンダリング時に無視するための変数
+  const [isPasswordValid, setIsPasswordValid] = useState(true); // パスワードの文字数が適切な文字数(5~20)なのかを判別する変数
   const [password, setPassword] = useState(""); // パスワード
   const [confirmPassword, setConfirmPassword] = useState(""); // 確認用パスワード
   const [registerUserInfo, setRegisterUserInfo] = useState<userInfoType>({
@@ -34,6 +35,20 @@ const Register = () => {
     {}
   );
   const router = useRouter();
+
+  useEffect(() => {
+    const minPasswordValid: number = 5; // パスワードの最小文字数
+    const maxPasswordValid: number = 20; // パスワードの最大文字数
+    // パスワードの文字数が適切なら登録できるようにする。
+    if (
+      minPasswordValid <= password.length &&
+      password.length <= maxPasswordValid
+    ) {
+      setIsPasswordValid(false);
+    } else {
+      setIsPasswordValid(true);
+    }
+  }, [password]);
 
   useEffect(() => {
     // 初回のレンダリング時は無視する
@@ -64,7 +79,8 @@ const Register = () => {
         // 登録の処理が終了したら最初のページ戻す。
         router.push("/");
       } catch (error) {
-        console.error("Error fetching data:", error);
+        alert("登録失敗しました。一度ログインページに戻します。");
+        router.push("/");
       }
     };
 
@@ -136,7 +152,9 @@ const Register = () => {
           />
         </div>
         <div>
-          <button onClick={signup}>登録</button>
+          <button onClick={signup} disabled={isPasswordValid}>
+            登録
+          </button>
         </div>
         <h6>※5文字から20文字まででお願いします。</h6>
       </div>

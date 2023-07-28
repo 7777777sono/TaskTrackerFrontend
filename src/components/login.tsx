@@ -55,7 +55,13 @@ const Login = () => {
         <button onClick={loginCheck}>ログイン</button>
       </div>
       <div>
-        <h5>登録してない人は下のリンクからお願いします。</h5>
+        <>
+          <Link href={{ pathname: "/passwordResetPage" }} legacyBehavior>
+            <a>パスワード忘れた方</a>
+          </Link>
+        </>
+      </div>
+      <div>
         <>
           <Link href={{ pathname: "/registerPage" }} legacyBehavior>
             <a>登録はこちらから</a>
