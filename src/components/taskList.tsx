@@ -1,7 +1,9 @@
 const TaskList = () => {
   return (
     <>
-      <h1>タスク一覧</h1>
+      <div>
+        <h1>タスク一覧</h1>
+      </div>
     </>
   );
 };

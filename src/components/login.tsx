@@ -30,43 +30,54 @@ const Login = () => {
       alert(error.response.data.message);
     }
   };
+
   return (
     <>
-      {/* メール入力 */}
       <div>
-        <h4>Gmail</h4>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      {/* パスワード入力 */}
-      <div>
-        <h4>パスワード</h4>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      {/* メールとパスワードが登録したのと一致したらログインする。 */}
-      <div>
-        <button onClick={loginCheck}>ログイン</button>
-      </div>
-      <div>
-        <>
-          <Link href={{ pathname: "/passwordResetPage" }} legacyBehavior>
+        {/* メール入力 */}
+        <div>
+          <h4>Gmail</h4>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        {/* パスワード入力 */}
+        <div>
+          <h4>パスワード</h4>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {/* メールとパスワードが登録したのと一致したらログインする。 */}
+        <div>
+          <button onClick={loginCheck}>ログイン</button>
+        </div>
+        <div>
+          <Link
+            href={{
+              pathname: "/registerAndPasswordResetPage",
+              query: { isRegister: false },
+            }}
+            legacyBehavior
+          >
             <a>パスワード忘れた方</a>
           </Link>
-        </>
-      </div>
-      <div>
-        <>
-          <Link href={{ pathname: "/registerPage" }} legacyBehavior>
+        </div>
+        <div>
+          <Link
+            href={{
+              pathname: "/registerAndPasswordResetPage",
+              query: { isRegister: true },
+            }}
+            legacyBehavior
+          >
             <a>登録はこちらから</a>
           </Link>
-        </>
+        </div>
       </div>
     </>
   );

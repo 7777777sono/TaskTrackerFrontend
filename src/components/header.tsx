@@ -12,8 +12,10 @@ const Header = () => {
 
   return (
     <>
-      <h1>Task Tracker</h1>
-      {isLogin ? <button onClick={logout}>ログアウト</button> : <></>}
+      <header>
+        <h1>Task Tracker</h1>
+        {isLogin ? <button onClick={logout}>ログアウト</button> : <></>}
+      </header>
     </>
   );
 };

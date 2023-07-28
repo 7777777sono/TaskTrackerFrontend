@@ -10,6 +10,7 @@ const Register = () => {
     email: string;
     google_id: string;
     password: string;
+    is_update: boolean;
   };
 
   // 何でも追加できるようにする
@@ -29,11 +30,11 @@ const Register = () => {
     email: "",
     google_id: "",
     password: "",
+    is_update: false,
   }); // 登録するユーザの情報を格納するオブジェクト
-  // 取得するグーグルアカウントの情報を格納しておく
   const [googleAccountInfo, setGoogleAccountInfo] = useState<googleAccountInfo>(
     {}
-  );
+  ); // 取得するグーグルアカウントの情報を格納しておく
   const router = useRouter();
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const Register = () => {
       email: googleAccountInfo.email,
       google_id: googleAccountInfo.uid,
       password: password,
+      is_update: false,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [googleAccountInfo]);
@@ -116,7 +118,7 @@ const Register = () => {
 
   // 新規登録を行う関数
   const signup = async () => {
-    if (passwardCheck()) {
+    if (passwordCheck()) {
       await getGoogleAccountInfo();
     } else {
       alert("パスワードが異なります。");
@@ -124,7 +126,7 @@ const Register = () => {
   };
 
   // パスワードが一致しているのかを確認する関数
-  const passwardCheck = () => {
+  const passwordCheck = () => {
     if (password === confirmPassword) {
       return true;
     } else {

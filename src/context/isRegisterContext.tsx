@@ -14,4 +14,4 @@ export const IsRegisterProvider = ({ children }: any) => {
   );
 };
 
-export const useIsLogin = () => useContext(isRegisterContext);
+export const useIsRegister = () => useContext(isRegisterContext);
