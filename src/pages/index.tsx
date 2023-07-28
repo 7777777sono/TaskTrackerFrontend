@@ -1,11 +1,16 @@
-import Login from "../components/login";
+import Header from "../components/header";
+import { LoginUserProvider } from "../context/loginUserContext";
+import Home from "../components/home";
 
-const Home = () => {
+const Index = () => {
   return (
     <>
-      <Login></Login>
+      <LoginUserProvider>
+        <Header></Header>
+        <Home></Home>
+      </LoginUserProvider>
     </>
   );
 };
 
-export default Home;
+export default Index;

@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useIsLogin, useUser } from "../context/loginUserContext";
 
 // ログインのためのコンポーネント
 const Login = () => {
-  // 何でも追加できるようにする
-  interface user {
-    [prop: string]: any;
-  }
-
   const [email, setEmail] = useState(""); // メールアドレス
   const [password, setPassword] = useState(""); // パスワード
-  const [users, setUsers] = useState<user>([]); // 登録されているユーザの情報を格納する変数
+  const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
+  const [user, setUser] = useUser(); // ログインしたユーザの情報を格納するオブジェクト
 
   // 登録してあるユーザと入力情報が一致しているかを確認する関数
   const loginCheck = async () => {
@@ -27,9 +24,10 @@ const Login = () => {
         password: password,
       });
 
-      await console.log(response);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+      setIsLogin(true);
+      setUser(response.data.data);
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
   return (
