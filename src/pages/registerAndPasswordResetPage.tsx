@@ -1,19 +1,16 @@
-import { IsRegisterProvider } from "../context/isRegisterContext";
-import { LoginUserProvider } from "../context/loginUserContext";
 import Header from "../components/header";
 import RegisterAndPasswordReset from "../components/registerAndPasswordReset";
 import { QueryProvider } from "../context/queryContext";
+import { AccountManagementProvider } from "../context/accountManagementContext";
 
 const RegisterAndPasswordResetPage = () => {
   return (
     <>
       <QueryProvider>
-        <LoginUserProvider>
+        <AccountManagementProvider>
           <Header></Header>
-          <IsRegisterProvider>
-            <RegisterAndPasswordReset></RegisterAndPasswordReset>
-          </IsRegisterProvider>
-        </LoginUserProvider>
+          <RegisterAndPasswordReset></RegisterAndPasswordReset>
+        </AccountManagementProvider>
       </QueryProvider>
     </>
   );

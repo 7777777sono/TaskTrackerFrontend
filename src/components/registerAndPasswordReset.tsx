@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PasswordReset from "../components/passwordReset";
 import Register from "../components/register";
-import { useIsRegister } from "../context/isRegisterContext";
+import { useIsRegister } from "../context/accountManagementContext";
 import { useQuery } from "../context/queryContext";
 
 const RegisterAndPasswordReset = () => {

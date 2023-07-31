@@ -3,36 +3,23 @@ import { auth } from "../libs/firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/router";
 import axios from "axios";
+import {
+  useConfirmPassword,
+  useEmail,
+  useGoogleAccountInfo,
+  usePassword,
+  useUserId,
+  useUserInfo,
+} from "../context/accountManagementContext";
 
 const PasswordReset = () => {
-  type userInfoType = {
-    name: string;
-    email: string;
-    google_id: string;
-    password: string;
-    is_update: boolean;
-  };
-
-  // 何でも追加できるようにする
-  interface googleAccountInfo {
-    [prop: string]: any;
-  }
-
-  const [email, setEmail] = useState(""); // メールアドレス
-  const [password, setPassword] = useState(""); // パスワード
-  const [confirmPassword, setConfirmPassword] = useState(""); // 確認用パスワード
-  const [updateUserId, setUpdateUserId] = useState(0); // 更新するユーザのidを格納する関数
+  const [email, setEmail] = useEmail(); // メールアドレス
   const [isPasswordValid, setIsPasswordValid] = useState(true); // パスワードの文字数が適切な文字数(5~20)なのかを判別する変数
-  const [googleAccountInfo, setGoogleAccountInfo] = useState<googleAccountInfo>(
-    {}
-  ); // 取得するグーグルアカウントの情報を格納しておく
-  const [updateUserInfo, setUpdateUserInfo] = useState<userInfoType>({
-    name: "",
-    email: "",
-    google_id: "",
-    password: "",
-    is_update: true,
-  }); // 更新するユーザの情報を格納するオブジェクト
+  const [password, setPassword] = usePassword(); // パスワード
+  const [confirmPassword, setConfirmPassword] = useConfirmPassword(); // 確認用パスワード
+  const [updateUserId, setUpdateUserId] = useUserId(); // 更新するユーザのidを格納する関数
+  const [updateUserInfo, setUpdateUserInfo] = useUserInfo(); // 更新するユーザの情報を格納するオブジェクト
+  const [googleAccountInfo, setGoogleAccountInfo] = useGoogleAccountInfo(); // 取得するグーグルアカウントの情報を格納しておく
   const [googleAccountIsFirstRender, setGoogleAccountIsFirstRender] =
     useState(true); // (グーグルアカウントの情報のときの) 初回レンダリング時に無視するための変数
   const [updateUserIsFirstRender, setUpdateUserIsFirstRender] = useState(true); // (更新ユーザの情報のときの) 初回レンダリング時に無視するための変数
@@ -52,6 +39,7 @@ const PasswordReset = () => {
     } else {
       setIsPasswordValid(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
   useEffect(() => {

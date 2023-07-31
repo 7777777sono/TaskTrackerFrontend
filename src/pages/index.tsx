@@ -1,14 +1,14 @@
 import Header from "../components/header";
-import { LoginUserProvider } from "../context/loginUserContext";
 import Home from "../components/home";
+import { AccountManagementProvider } from "../context/accountManagementContext";
 
 const Index = () => {
   return (
     <>
-      <LoginUserProvider>
+      <AccountManagementProvider>
         <Header></Header>
         <Home></Home>
-      </LoginUserProvider>
+      </AccountManagementProvider>
     </>
   );
 };

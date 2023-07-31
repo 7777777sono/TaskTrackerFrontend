@@ -3,38 +3,24 @@ import { auth } from "../libs/firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {
+  useConfirmPassword,
+  useGoogleAccountInfo,
+  useIsPasswordValid,
+  usePassword,
+  useUserInfo,
+} from "../context/accountManagementContext";
 
 const Register = () => {
-  type userInfoType = {
-    name: string;
-    email: string;
-    google_id: string;
-    password: string;
-    is_update: boolean;
-  };
-
-  // 何でも追加できるようにする
-  interface googleAccountInfo {
-    [prop: string]: any;
-  }
-
+  const [isPasswordValid, setIsPasswordValid] = useIsPasswordValid(); // パスワードの文字数が適切な文字数(5~20)なのかを判別する変数
+  const [password, setPassword] = usePassword(); // パスワード
+  const [confirmPassword, setConfirmPassword] = useConfirmPassword(); // 確認用パスワード
+  const [registerUserInfo, setRegisterUserInfo] = useUserInfo(); // 登録するユーザの情報を格納するオブジェクト
+  const [googleAccountInfo, setGoogleAccountInfo] = useGoogleAccountInfo(); // 取得するグーグルアカウントの情報を格納しておく
   const [googleAccountIsFirstRender, setGoogleAccountIsFirstRender] =
     useState(true); // (グーグルアカウントの情報のときの) 初回レンダリング時に無視するための変数
   const [registerUserIsFirstRender, setRegisterUserIsFirstRender] =
     useState(true); // (登録ユーザの情報のときの) 初回レンダリング時に無視するための変数
-  const [isPasswordValid, setIsPasswordValid] = useState(true); // パスワードの文字数が適切な文字数(5~20)なのかを判別する変数
-  const [password, setPassword] = useState(""); // パスワード
-  const [confirmPassword, setConfirmPassword] = useState(""); // 確認用パスワード
-  const [registerUserInfo, setRegisterUserInfo] = useState<userInfoType>({
-    name: "",
-    email: "",
-    google_id: "",
-    password: "",
-    is_update: false,
-  }); // 登録するユーザの情報を格納するオブジェクト
-  const [googleAccountInfo, setGoogleAccountInfo] = useState<googleAccountInfo>(
-    {}
-  ); // 取得するグーグルアカウントの情報を格納しておく
   const router = useRouter();
 
   useEffect(() => {
@@ -49,6 +35,7 @@ const Register = () => {
     } else {
       setIsPasswordValid(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
   useEffect(() => {

@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { useIsLogin, useUser } from "../context/loginUserContext";
+import {
+  useEmail,
+  useIsLogin,
+  useLoginUser,
+  usePassword,
+} from "../context/accountManagementContext";
 
 // ログインのためのコンポーネント
 const Login = () => {
-  const [email, setEmail] = useState(""); // メールアドレス
-  const [password, setPassword] = useState(""); // パスワード
+  const [email, setEmail] = useEmail(); // メールアドレス
+  const [password, setPassword] = usePassword(); // パスワード
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
-  const [user, setUser] = useUser(); // ログインしたユーザの情報を格納するオブジェクト
+  const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
 
   // 登録してあるユーザと入力情報が一致しているかを確認する関数
   const loginCheck = async () => {
