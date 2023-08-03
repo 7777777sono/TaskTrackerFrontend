@@ -1,6 +1,4 @@
-import { useState, createContext, useContext, useEffect } from "react";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../libs/firebase";
+import { useState, createContext, useContext } from "react";
 
 export const isLoginContext = createContext<any>([0, () => {}]);
 export const loginUserContext = createContext<any>([0, () => {}]);

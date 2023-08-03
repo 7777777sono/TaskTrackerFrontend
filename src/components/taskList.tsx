@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLoginUser } from "../context/accountManagementContext";
 import axios from "axios";
+import { useTasks } from "../context/tasksContext";
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState([]); // 追加したタスク一覧を格納する
+  const [tasks, setTasks] = useTasks(); // 追加したタスク一覧を格納する
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
 
   useEffect(() => {
@@ -109,6 +110,11 @@ const TaskList = () => {
     getNewTasks();
   };
 
+  // 優先度(priority)でソートしたものを格納する
+  const sortedTasks = tasks.sort(
+    (a: any, b: any) => Number(a.priority) - Number(b.priority)
+  );
+
   return (
     <>
       <div>
@@ -123,7 +129,7 @@ const TaskList = () => {
             <h3>優先度</h3>
             <h3>完了済み？</h3>
           </div>
-          {tasks.map((task: any, index: number) => {
+          {sortedTasks.map((task: any, index: number) => {
             return (
               <div key={index}>
                 <input

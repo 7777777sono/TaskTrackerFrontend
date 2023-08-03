@@ -1,13 +1,16 @@
 import Header from "../components/header";
 import Home from "../components/home";
 import { AccountManagementProvider } from "../context/accountManagementContext";
+import { TasksProvider } from "../context/tasksContext";
 
 const Index = () => {
   return (
     <>
       <AccountManagementProvider>
         <Header></Header>
-        <Home></Home>
+        <TasksProvider>
+          <Home></Home>
+        </TasksProvider>
       </AccountManagementProvider>
     </>
   );
