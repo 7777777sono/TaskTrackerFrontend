@@ -110,6 +110,19 @@ const TaskList = () => {
     getNewTasks();
   };
 
+  // 課題を削除する関数
+  const taskDelete = async (task: any) => {
+    let deleteUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+
+    try {
+      await axios.delete(deleteUrl, { data: { user_id: user.id } });
+    } catch (error) {
+      alert("削除に失敗しました。");
+    }
+
+    getNewTasks();
+  };
+
   // 優先度(priority)でソートしたものを格納する
   const sortedTasks = tasks.sort(
     (a: any, b: any) => Number(a.priority) - Number(b.priority)
@@ -165,6 +178,13 @@ const TaskList = () => {
                   <option value={"true"}>完了</option>
                   <option value={"false"}>未完了</option>
                 </select>
+                <button
+                  onClick={() => {
+                    taskDelete(task);
+                  }}
+                >
+                  削除
+                </button>
               </div>
             );
           })}
