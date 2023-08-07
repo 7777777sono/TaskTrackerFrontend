@@ -11,6 +11,28 @@ const TaskAdd = () => {
   const [priority, setPriority] = useState(""); // 優先度
   const [isDisabled, setIsDisabled] = useState(true); // disabled属性を付与するかどうかを決める変数
 
+  useEffect(() => {
+    // disabled属性を判定する関数
+    const disabledCheck = () => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // 時間を00:00:00に設定
+
+      // タスク名が書かれているかつ締切日が今日以降かつ優先度が範囲以内ならdisabled属性の付与をなくす
+      if (
+        name.length > 0 &&
+        new Date(deadline) > today &&
+        Number(priority) >= 1 &&
+        Number(priority) <= 3
+      ) {
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(true);
+      }
+    };
+
+    disabledCheck();
+  }, [name, deadline, priority]);
+
   // タスクを追加する関数
   const taskAdd = async () => {
     try {
@@ -42,24 +64,6 @@ const TaskAdd = () => {
     }
   };
 
-  // disabled属性を判定する関数
-  const disabledCheck = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // 時間を00:00:00に設定
-
-    // タスク名が書かれているかつ締切日が今日以降かつ優先度が範囲以内ならdisabled属性の付与をなくす
-    if (
-      name.length > 0 &&
-      new Date(deadline) > today &&
-      Number(priority) >= 1 &&
-      Number(priority) <= 3
-    ) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  };
-
   return (
     <>
       <div>
@@ -74,7 +78,6 @@ const TaskAdd = () => {
           value={name}
           onChange={(e) => {
             setName(e.target.value);
-            disabledCheck();
           }}
         />
         <input
@@ -82,14 +85,12 @@ const TaskAdd = () => {
           value={deadline}
           onChange={(e) => {
             setDeadline(e.target.value);
-            disabledCheck();
           }}
         />
         <select
           value={priority}
           onChange={(e) => {
             setPriority(e.target.value);
-            disabledCheck();
           }}
         >
           <option value={1}>高</option>
