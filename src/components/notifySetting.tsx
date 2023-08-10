@@ -3,6 +3,8 @@ import { useIsLogin, useLoginUser } from "../context/accountManagementContext";
 import { useQuery } from "../context/queryContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import NotifyTokenGetDescription from "./notifyTokenGetDescription";
+import Link from "next/link";
 
 const NotifySetting = () => {
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
@@ -73,7 +75,17 @@ const NotifySetting = () => {
           }}
         />
         <button onClick={registerToken}>登録</button>
+        <Link
+          href={{
+            pathname: "/",
+            query: { isLogin: isLogin, userId: user.id },
+          }}
+          legacyBehavior
+        >
+          <a>戻る</a>
+        </Link>
       </div>
+      <NotifyTokenGetDescription></NotifyTokenGetDescription>
     </>
   );
 };
