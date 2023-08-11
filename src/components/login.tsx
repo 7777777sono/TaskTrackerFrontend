@@ -7,6 +7,7 @@ import {
   useLoginUser,
   usePassword,
 } from "../context/accountManagementContext";
+import loginStyles from "../styles/login.module.scss";
 
 // ログインのためのコンポーネント
 const Login = () => {
@@ -38,11 +39,15 @@ const Login = () => {
 
   return (
     <>
-      <div>
+      <div className={loginStyles.loginForm}>
+        <div>
+          <h3>Welcome</h3>
+        </div>
         {/* メール入力 */}
         <div>
-          <h4>Gmail</h4>
           <input
+            className={loginStyles.inputForm}
+            placeholder="Gmail"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -50,8 +55,9 @@ const Login = () => {
         </div>
         {/* パスワード入力 */}
         <div>
-          <h4>パスワード</h4>
           <input
+            className={loginStyles.inputForm}
+            placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -59,7 +65,9 @@ const Login = () => {
         </div>
         {/* メールとパスワードが登録したのと一致したらログインする。 */}
         <div>
-          <button onClick={loginCheck}>ログイン</button>
+          <button className={loginStyles.loginButton} onClick={loginCheck}>
+            ログイン
+          </button>
         </div>
         <div>
           <Link
@@ -69,7 +77,7 @@ const Login = () => {
             }}
             legacyBehavior
           >
-            <a>パスワード忘れた方</a>
+            <a className={loginStyles.link}>パスワード忘れた方</a>
           </Link>
         </div>
         <div>
@@ -80,7 +88,7 @@ const Login = () => {
             }}
             legacyBehavior
           >
-            <a>登録はこちらから</a>
+            <a className={loginStyles.link}>登録はこちらから</a>
           </Link>
         </div>
       </div>

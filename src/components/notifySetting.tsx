@@ -66,15 +66,21 @@ const NotifySetting = () => {
   return (
     <>
       <div>
-        <h3>トークンを入力してください。</h3>
-        <input
-          type="text"
-          value={token}
-          onChange={(e) => {
-            setToken(e.target.value);
-          }}
-        />
-        <button onClick={registerToken}>登録</button>
+        {isLogin ? (
+          <>
+            <h3>トークンを入力してください。</h3>
+            <input
+              type="text"
+              value={token}
+              onChange={(e) => {
+                setToken(e.target.value);
+              }}
+            />
+            <button onClick={registerToken}>登録</button>
+          </>
+        ) : (
+          <h3>以下のリンクよりお戻りください。</h3>
+        )}
         <Link
           href={{
             pathname: "/",
@@ -85,7 +91,11 @@ const NotifySetting = () => {
           <a>戻る</a>
         </Link>
       </div>
-      <NotifyTokenGetDescription></NotifyTokenGetDescription>
+      {isLogin ? (
+        <NotifyTokenGetDescription></NotifyTokenGetDescription>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
