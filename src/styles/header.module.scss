@@ -1,1 +1,40 @@
-@import "responsive.module.scss"
+@import "responsive.module.scss";
+
+.headerZone {
+  background: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%);
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    color: white;
+    @include width-min(1280px) {
+      padding-top: 20px;
+      padding-left: 10px;
+      padding-bottom: 20px;
+      font-size: 40px;
+    }
+    @include width-min-max(1080px, 1280px) {
+      padding-top: 20px;
+      padding-left: 10px;
+      padding-bottom: 20px;
+      font-size: 35px;
+    }
+    @include width-min-max(590px, 1080px) {
+      padding-top: 20px;
+      padding-left: 10px;
+      padding-bottom: 20px;
+      font-size: 30px;
+    }
+    @include width-max(590px) {
+      padding-top: 20px;
+      padding-left: 10px;
+      padding-bottom: 20px;
+      font-size: 25px;
+    }
+  }
+  .logoutImage {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+}

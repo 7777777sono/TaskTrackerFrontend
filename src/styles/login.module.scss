@@ -16,6 +16,7 @@
     margin-top: 1%;
     margin-bottom: 1%;
     h3 {
+      padding-top: 20px;
       background: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -71,6 +72,7 @@
       border: none;
       background-image: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%);
       color: white;
+      text-align: center;
       cursor: pointer;
       @include width-min(1280px) {
         font-size: 25px;
