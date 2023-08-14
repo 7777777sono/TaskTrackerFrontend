@@ -40,10 +40,16 @@
       &:hover {
         filter: brightness(120%);
       }
+      &:focus {
+        border-bottom: 1px solid transparent; /* 透明な初期のボーダー */
+        border-image: linear-gradient(135deg, #81fbb8 10%, #28c76f 100%);
+        border-image-slice: 1; /* ボーダーのスライスを設定 */
+      }
       border: none;
       width: 80%;
       margin-top: 10px;
       margin-bottom: 10px;
+      border-bottom: 1px solid black;
       @include width-min(1280px) {
         font-size: 25px;
         padding-top: 20px;
@@ -74,6 +80,9 @@
       color: white;
       text-align: center;
       cursor: pointer;
+      &:hover {
+        filter: brightness(120%);
+      }
       @include width-min(1280px) {
         font-size: 25px;
         padding-top: 20px;

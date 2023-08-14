@@ -2,6 +2,7 @@ import HeadZone from "../components/HeadZone";
 import Header from "../components/header";
 import Home from "../components/home";
 import { AccountManagementProvider } from "../context/accountManagementContext";
+import { IsLoadingProvider } from "../context/isLoadingContext";
 import { QueryProvider } from "../context/queryContext";
 import { TasksProvider } from "../context/tasksContext";
 
@@ -13,7 +14,9 @@ const Index = () => {
         <AccountManagementProvider>
           <Header></Header>
           <TasksProvider>
-            <Home></Home>
+            <IsLoadingProvider>
+              <Home></Home>
+            </IsLoadingProvider>
           </TasksProvider>
         </AccountManagementProvider>
       </QueryProvider>

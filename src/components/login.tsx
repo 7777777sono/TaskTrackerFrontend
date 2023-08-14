@@ -7,6 +7,8 @@ import {
   usePassword,
 } from "../context/accountManagementContext";
 import loginStyles from "../styles/login.module.scss";
+import Loading from "./loading";
+import { useIsLoading } from "../context/isLoadingContext";
 
 // ログインのためのコンポーネント
 const Login = () => {
@@ -14,10 +16,13 @@ const Login = () => {
   const [password, setPassword] = usePassword(); // パスワード
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
+  const [isLoading, setIsLoading] = useIsLoading(); // ロード中かどうかを判別する
 
   // 登録してあるユーザと入力情報が一致しているかを確認する関数
   const loginCheck = async () => {
+    setIsLoading(true);
     await postInputDatas();
+    setIsLoading(false);
   };
 
   // 入力した情報を送る関数
@@ -91,6 +96,7 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      <Loading></Loading>
     </>
   );
 };
