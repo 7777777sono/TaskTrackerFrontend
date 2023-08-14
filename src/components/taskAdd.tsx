@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTasks } from "../context/tasksContext";
 import axios from "axios";
 import { useLoginUser } from "../context/accountManagementContext";
+import styles from "../styles/task.module.scss";
 
 const TaskAdd = () => {
   const [tasks, setTasks] = useTasks(); // 追加したタスク一覧を格納する
@@ -66,39 +67,91 @@ const TaskAdd = () => {
 
   return (
     <>
-      <div>
+      <div className={styles.addZone}>
         <div>
+          <table>
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>締め切り</th>
+                <th>優先度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>
+                <input
+                  className={styles.textInput}
+                  type="text"
+                  placeholder="ここにタスク名を入力"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  value={deadline}
+                  onChange={(e) => {
+                    setDeadline(e.target.value);
+                  }}
+                />
+              </td>
+              <td>
+                <select
+                  value={priority}
+                  className={styles.selectZone}
+                  onChange={(e) => {
+                    setPriority(e.target.value);
+                  }}
+                >
+                  <option value={1}>高</option>
+                  <option value={2}>中</option>
+                  <option value={3}>低</option>
+                </select>
+              </td>
+            </tbody>
+          </table>
+        </div>
+
+        {/* <div className={styles.titleZone}>
           <h3>タイトル</h3>
           <h3>締め切り</h3>
           <h3>優先度</h3>
-          <h3>完了済み？</h3>
         </div>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <input
-          type="date"
-          value={deadline}
-          onChange={(e) => {
-            setDeadline(e.target.value);
-          }}
-        />
-        <select
-          value={priority}
-          onChange={(e) => {
-            setPriority(e.target.value);
-          }}
-        >
-          <option value={1}>高</option>
-          <option value={2}>中</option>
-          <option value={3}>低</option>
-        </select>
+        <div className={styles.inputZone}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <input
+            type="date"
+            value={deadline}
+            onChange={(e) => {
+              setDeadline(e.target.value);
+            }}
+          />
+          <select
+            value={priority}
+            onChange={(e) => {
+              setPriority(e.target.value);
+            }}
+          >
+            <option value={1}>高</option>
+            <option value={2}>中</option>
+            <option value={3}>低</option>
+          </select>
+        </div> */}
         <div>
-          <button onClick={taskAdd} disabled={isDisabled}>
+          <button
+            className={styles.addButton}
+            onClick={taskAdd}
+            disabled={isDisabled}
+          >
             追加
           </button>
         </div>

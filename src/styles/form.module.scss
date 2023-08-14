@@ -1,6 +1,6 @@
 @import "responsive.module.scss";
 
-.loginForm {
+.form {
   display: flex;
   justify-content: center; // 水平方向
   align-items: center; //垂直方向
@@ -31,6 +31,40 @@
       }
       @include width-max(590px) {
         font-size: 25px;
+      }
+    }
+    .description {
+      text-align: center;
+      margin-left: 5px;
+      margin-right: 5px;
+      @include width-min(1280px) {
+        font-size: 36px;
+      }
+      @include width-min-max(1080px, 1280px) {
+        font-size: 33px;
+      }
+      @include width-min-max(590px, 1080px) {
+        font-size: 27px;
+      }
+      @include width-max(590px) {
+        font-size: 23px;
+      }
+    }
+    .passwordResetDescription {
+      text-align: center;
+      margin-left: 7px;
+      margin-right: 7px;
+      @include width-min(1280px) {
+        font-size: 30px;
+      }
+      @include width-min-max(1080px, 1280px) {
+        font-size: 25px;
+      }
+      @include width-min-max(590px, 1080px) {
+        font-size: 20px;
+      }
+      @include width-max(590px) {
+        font-size: 15px;
       }
     }
     input:focus {
@@ -71,7 +105,7 @@
         padding-bottom: 10px;
       }
     }
-    .loginButton {
+    .formButton {
       width: 80%;
       margin-top: 10px;
       margin-bottom: 10px;
@@ -114,6 +148,29 @@
       background-image: linear-gradient(135deg, #2afadf 10%, #4c83ff 100%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      @include width-min(1280px) {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      @include width-min-max(1080px, 1280px) {
+        font-size: 17px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      @include width-min-max(590px, 1080px) {
+        font-size: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      @include width-max(590px) {
+        font-size: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
+    .precautions {
+      color: red;
       @include width-min(1280px) {
         font-size: 25px;
         padding-top: 10px;

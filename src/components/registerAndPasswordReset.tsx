@@ -3,6 +3,7 @@ import PasswordReset from "../components/passwordReset";
 import Register from "../components/register";
 import { useIsRegister } from "../context/accountManagementContext";
 import { useQuery } from "../context/queryContext";
+import Loading from "./loading";
 
 const RegisterAndPasswordReset = () => {
   const query = useQuery(); // クエリパラメータを格納する
@@ -18,7 +19,10 @@ const RegisterAndPasswordReset = () => {
   }, []);
 
   return (
-    <>{isRegister ? <Register></Register> : <PasswordReset></PasswordReset>}</>
+    <>
+      {isRegister ? <Register></Register> : <PasswordReset></PasswordReset>}
+      <Loading></Loading>
+    </>
   );
 };
 

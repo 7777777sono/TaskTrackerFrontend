@@ -11,6 +11,8 @@ import {
   useUserId,
   useUserInfo,
 } from "../context/accountManagementContext";
+import passwordResetStyles from "../styles/form.module.scss";
+import { useIsLoading } from "../context/isLoadingContext";
 
 const PasswordReset = () => {
   const [email, setEmail] = useEmail(); // メールアドレス
@@ -20,6 +22,7 @@ const PasswordReset = () => {
   const [updateUserId, setUpdateUserId] = useUserId(); // 更新するユーザのidを格納する関数
   const [updateUserInfo, setUpdateUserInfo] = useUserInfo(); // 更新するユーザの情報を格納するオブジェクト
   const [googleAccountInfo, setGoogleAccountInfo] = useGoogleAccountInfo(); // 取得するグーグルアカウントの情報を格納しておく
+  const [isLoading, setIsLoading] = useIsLoading(); // ロード中かどうかを判別する
   const [googleAccountIsFirstRender, setGoogleAccountIsFirstRender] =
     useState(true); // (グーグルアカウントの情報のときの) 初回レンダリング時に無視するための変数
   const [updateUserIsFirstRender, setUpdateUserIsFirstRender] = useState(true); // (更新ユーザの情報のときの) 初回レンダリング時に無視するための変数
@@ -59,6 +62,7 @@ const PasswordReset = () => {
         is_update: true,
       });
     } else {
+      setIsLoading(false);
       alert("メールアドレスが違います。一度ログインページに戻します。");
       router.push("/");
     }
@@ -76,6 +80,7 @@ const PasswordReset = () => {
         );
         await setUpdateUserId(response.data.id);
       } catch (error) {
+        setIsLoading(false);
         alert("エラーが発生しました。一度ログインページに戻します。");
         router.push("/");
       }
@@ -98,9 +103,11 @@ const PasswordReset = () => {
       let updateUrl: string = "http://127.0.0.1:4000/users/" + updateUserId;
       try {
         const response = await axios.patch(updateUrl, { password: password });
+        setIsLoading(false);
         await alert(response.data.message);
         router.push("/");
       } catch (error) {
+        setIsLoading(false);
         alert("更新失敗しました。一度ログインページに戻します。");
         router.push("/");
       }
@@ -116,6 +123,7 @@ const PasswordReset = () => {
     if (updateUserId !== -1) {
       passwordReset();
     } else {
+      setIsLoading(false);
       alert("登録してください。一度ログインページに戻します。");
       router.push("/");
     }
@@ -138,15 +146,18 @@ const PasswordReset = () => {
         setGoogleAccountInfo(result.user);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.error("エラーが発生しました:", error);
       });
   };
 
   // パスワードリセットを行う関数
   const passwordReset = async () => {
+    setIsLoading(true);
     if (passwordCheck()) {
       await getGoogleAccountInfo();
     } else {
+      setIsLoading(false);
       alert("パスワードが異なります。");
     }
   };
@@ -162,38 +173,54 @@ const PasswordReset = () => {
 
   return (
     <>
-      <div>
+      <div className={passwordResetStyles.form}>
+        <div>
+          <h3 className={passwordResetStyles.passwordResetDescription}>
+            登録したメールアドレスと再設定するパスワードを入力してください。
+          </h3>
+        </div>
         {/* メール入力 */}
         <div>
-          <h4>Gmail</h4>
           <input
             type="email"
+            placeholder="Gmail"
             value={email}
+            className={passwordResetStyles.inputForm}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <h4>下にある入力欄からパスワードを決めてください。</h4>
           <input
             type="password"
+            placeholder="Password"
             value={password}
+            className={passwordResetStyles.inputForm}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
-          <h4>確認用</h4>
           <input
             type="password"
+            placeholder="Confirm Password"
             value={confirmPassword}
+            className={passwordResetStyles.inputForm}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <div>
-          <button onClick={passwordReset} disabled={isPasswordValid}>
+          <button
+            className={passwordResetStyles.formButton}
+            onClick={passwordReset}
+            disabled={isPasswordValid}
+          >
             再決定
           </button>
         </div>
-        <h6>※5文字から20文字まででお願いします。</h6>
+        <div>
+          <h6 className={passwordResetStyles.precautions}>
+            ※5文字から20文字まででお願いします。
+          </h6>
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import {
   useLoginUser,
   usePassword,
 } from "../context/accountManagementContext";
-import loginStyles from "../styles/login.module.scss";
+import loginStyles from "../styles/form.module.scss";
 import Loading from "./loading";
 import { useIsLoading } from "../context/isLoadingContext";
 
@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <>
-      <div className={loginStyles.loginForm}>
+      <div className={loginStyles.form}>
         <div>
           <h3>Welcome</h3>
         </div>
@@ -69,7 +69,7 @@ const Login = () => {
         </div>
         {/* メールとパスワードが登録したのと一致したらログインする。 */}
         <div>
-          <button className={loginStyles.loginButton} onClick={loginCheck}>
+          <button className={loginStyles.formButton} onClick={loginCheck}>
             ログイン
           </button>
         </div>
