@@ -23,8 +23,84 @@
       th,
       td {
         text-align: center; /* 文字の揃え位置指定 */
-        padding-top: 20px;
-        padding-bottom: 20px;
+        @include width-min(1280px) {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+        @include width-max(1280px) {
+          padding-top: 15px;
+          padding-bottom: 15px;
+        }
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          input {
+            @include width-min(1280px) {
+              font-size: 25px;
+            }
+            @include width-min-max(1080px, 1280px) {
+              font-size: 17px;
+            }
+            @include width-min-max(590px, 1080px) {
+              font-size: 15px;
+            }
+            @include width-min-max(530px, 590px) {
+              font-size: 13px;
+            }
+            @include width-max(530px) {
+              font-size: 10px;
+            }
+          }
+          .prioritySelect {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            &::after {
+              position: absolute;
+              right: 15px;
+              width: 10px;
+              height: 7px;
+              background-color: #00ced1;
+              clip-path: polygon(0 0, 100% 0, 50% 100%);
+              content: "";
+              pointer-events: none;
+            }
+            select {
+              appearance: none;
+              @include width-min(1080px) {
+                min-width: 230px;
+              }
+              @include width-min-max(590px, 1080px) {
+                min-width: 150px;
+              }
+              @include width-max(590px) {
+                min-width: 100px;
+              }
+              border: none;
+              color: #000000;
+              @include width-min(1280px) {
+                font-size: 25px;
+              }
+              @include width-min-max(1080px, 1280px) {
+                font-size: 17px;
+              }
+              @include width-min-max(590px, 1080px) {
+                font-size: 15px;
+              }
+              @include width-min-max(530px, 590px) {
+                font-size: 13px;
+              }
+              @include width-max(530px) {
+                font-size: 10px;
+              }
+              cursor: pointer;
+            }
+            &:focus {
+              outline: none;
+            }
+          }
+        }
       }
     }
     .addButton {
@@ -58,6 +134,138 @@
         font-size: 13px;
         padding-top: 5px;
         padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+.listZone {
+  display: flex;
+  justify-content: center; // 水平方向
+  align-items: center; //垂直方向
+  flex-direction: column;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    // .title {
+
+    // }
+    table {
+      width: 80%;
+      table-layout: fixed; /* セルの幅計算指定 */
+      border-collapse: collapse; /* セルの線を重ねる */
+      th {
+        border-bottom: 3px solid #00ced1;
+        @include width-max(500px) {
+          font-size: 10px;
+        }
+      }
+      td {
+        border-bottom: 1.5px solid #00ced1;
+      }
+      th,
+      td {
+        text-align: center; /* 文字の揃え位置指定 */
+        @include width-min(1280px) {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+        @include width-max(1280px) {
+          padding-top: 15px;
+          padding-bottom: 15px;
+        }
+        padding-top: 20px;
+        padding-bottom: 20px;
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          input {
+            @include width-min(1280px) {
+              font-size: 25px;
+            }
+            @include width-min-max(1080px, 1280px) {
+              font-size: 17px;
+            }
+            @include width-min-max(590px, 1080px) {
+              font-size: 15px;
+            }
+            @include width-min-max(530px, 590px) {
+              font-size: 13px;
+            }
+            @include width-max(530px) {
+              font-size: 10px;
+            }
+          }
+          .selectBox {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            &::after {
+              position: absolute;
+              right: 15px;
+              width: 10px;
+              height: 7px;
+              background-color: #00ced1;
+              clip-path: polygon(0 0, 100% 0, 50% 100%);
+              content: "";
+              pointer-events: none;
+            }
+            select {
+              appearance: none;
+              @include width-min(1080px) {
+                min-width: 230px;
+              }
+              @include width-min-max(590px, 1080px) {
+                min-width: 150px;
+              }
+              @include width-max(590px) {
+                min-width: 100px;
+              }
+              border: none;
+              color: #000000;
+              @include width-min(1280px) {
+                font-size: 25px;
+              }
+              @include width-min-max(1080px, 1280px) {
+                font-size: 17px;
+              }
+              @include width-min-max(590px, 1080px) {
+                font-size: 15px;
+              }
+              @include width-min-max(530px, 590px) {
+                font-size: 13px;
+              }
+              @include width-max(530px) {
+                font-size: 10px;
+              }
+              cursor: pointer;
+            }
+            &:focus {
+              outline: none;
+            }
+          }
+          .deleteButton {
+            color: red;
+            @include width-min(1280px) {
+              font-size: 25px;
+            }
+            @include width-min-max(1080px, 1280px) {
+              font-size: 17px;
+            }
+            @include width-min-max(590px, 1080px) {
+              font-size: 15px;
+            }
+            @include width-min-max(530px, 590px) {
+              font-size: 13px;
+            }
+            @include width-max(530px) {
+              font-size: 10px;
+            }
+          }
+        }
       }
     }
   }

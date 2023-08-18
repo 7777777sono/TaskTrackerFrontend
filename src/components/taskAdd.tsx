@@ -9,7 +9,7 @@ const TaskAdd = () => {
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
   const [name, setName] = useState(""); // タスクの名前
   const [deadline, setDeadline] = useState(""); // 締切日
-  const [priority, setPriority] = useState(""); // 優先度
+  const [priority, setPriority] = useState(1); // 優先度
   const [isDisabled, setIsDisabled] = useState(true); // disabled属性を付与するかどうかを決める変数
 
   useEffect(() => {
@@ -79,73 +79,48 @@ const TaskAdd = () => {
             </thead>
             <tbody>
               <td>
-                <input
-                  className={styles.textInput}
-                  type="text"
-                  placeholder="ここにタスク名を入力"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
+                <div>
+                  <input
+                    type="text"
+                    placeholder="ここにタスク名を入力"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </div>
               </td>
               <td>
-                <input
-                  type="date"
-                  value={deadline}
-                  onChange={(e) => {
-                    setDeadline(e.target.value);
-                  }}
-                />
+                <div>
+                  <input
+                    type="date"
+                    value={deadline}
+                    onChange={(e) => {
+                      setDeadline(e.target.value);
+                    }}
+                  />
+                </div>
               </td>
               <td>
-                <select
-                  value={priority}
-                  className={styles.selectZone}
-                  onChange={(e) => {
-                    setPriority(e.target.value);
-                  }}
-                >
-                  <option value={1}>高</option>
-                  <option value={2}>中</option>
-                  <option value={3}>低</option>
-                </select>
+                <div>
+                  <label className={styles.prioritySelect}>
+                    <select
+                      value={priority}
+                      className={styles.selectZone}
+                      onChange={(e) => {
+                        setPriority(Number(e.target.value));
+                      }}
+                    >
+                      <option value={1}>高</option>
+                      <option value={2}>中</option>
+                      <option value={3}>低</option>
+                    </select>
+                  </label>
+                </div>
               </td>
             </tbody>
           </table>
         </div>
-
-        {/* <div className={styles.titleZone}>
-          <h3>タイトル</h3>
-          <h3>締め切り</h3>
-          <h3>優先度</h3>
-        </div>
-        <div className={styles.inputZone}>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => {
-              setDeadline(e.target.value);
-            }}
-          />
-          <select
-            value={priority}
-            onChange={(e) => {
-              setPriority(e.target.value);
-            }}
-          >
-            <option value={1}>高</option>
-            <option value={2}>中</option>
-            <option value={3}>低</option>
-          </select>
-        </div> */}
         <div>
           <button
             className={styles.addButton}
