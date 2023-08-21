@@ -8,9 +8,31 @@ const TaskAdd = () => {
   const [tasks, setTasks] = useTasks(); // 追加したタスク一覧を格納する
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
   const [name, setName] = useState(""); // タスクの名前
-  const [deadline, setDeadline] = useState(""); // 締切日
+  const [deadline, setDeadline] = useState(""); // 締切日(初期値は今日)
   const [priority, setPriority] = useState(1); // 優先度
   const [isDisabled, setIsDisabled] = useState(true); // disabled属性を付与するかどうかを決める変数
+
+  useEffect(() => {
+    // 今日の日付を得る関数
+    const getTodayDate = () => {
+      const today = new Date();
+      const year: number = today.getFullYear();
+      let month: string = String(today.getMonth() + 1);
+      let day: string = String(today.getDate());
+
+      // 月と日が1桁の場合は先頭に0を追加
+      if (Number(month) < 10) {
+        month = "0" + Number(month);
+      }
+      if (Number(day) < 10) {
+        day = "0" + Number(day);
+      }
+
+      return `${year}-${month}-${day}`;
+    };
+
+    setDeadline(getTodayDate());
+  }, []);
 
   useEffect(() => {
     // disabled属性を判定する関数
