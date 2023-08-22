@@ -46,8 +46,11 @@
       @include width-min-max(590px, 1080px) {
         font-size: 27px;
       }
-      @include width-max(590px) {
+      @include width-min-max(530px, 590px) {
         font-size: 23px;
+      }
+      @include width-max(530px) {
+        font-size: 20px;
       }
     }
     .passwordResetDescription {
