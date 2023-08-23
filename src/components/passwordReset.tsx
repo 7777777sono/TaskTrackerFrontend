@@ -75,7 +75,7 @@ const PasswordReset = () => {
       try {
         // axios.postを使ってPOSTリクエストを送信
         const response = await axios.post(
-          "http://127.0.0.1:4000/users",
+          "https://task-tracker-ftp3.onrender.com/users",
           updateUserInfo
         );
         await setUpdateUserId(response.data.id);
@@ -100,7 +100,7 @@ const PasswordReset = () => {
   useEffect(() => {
     // パスワードリセットを行う関数。
     const passwordReset = async () => {
-      let updateUrl: string = "http://127.0.0.1:4000/users/" + updateUserId;
+      let updateUrl: string = "https://task-tracker-ftp3.onrender.com/users/" + updateUserId;
       try {
         const response = await axios.patch(updateUrl, { password: password });
         setIsLoading(false);

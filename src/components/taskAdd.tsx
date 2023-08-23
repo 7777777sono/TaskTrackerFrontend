@@ -59,7 +59,7 @@ const TaskAdd = () => {
   // タスクを追加する関数
   const taskAdd = async () => {
     try {
-      let postUrl: string = "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+      let postUrl: string = "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
       // バックエンドでログイン処理
       const response = await axios.post(postUrl, {
         name: name,
@@ -78,7 +78,7 @@ const TaskAdd = () => {
   // 更新後のタスク一覧を取得する関数
   const getNewTasks = async () => {
     let getTasksUrl: string =
-      "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+      "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
     try {
       const response: any = await axios.get(getTasksUrl);
       setTasks(response.data);

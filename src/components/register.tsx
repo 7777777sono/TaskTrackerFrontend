@@ -64,7 +64,7 @@ const Register = () => {
       try {
         // axios.postを使ってPOSTリクエストを送信
         const response = await axios.post(
-          "http://127.0.0.1:4000/users",
+          "https://task-tracker-ftp3.onrender.com/users",
           registerUserInfo
         );
         setIsLoading(false);

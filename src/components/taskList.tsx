@@ -12,7 +12,7 @@ const TaskList = () => {
     // ユーザが登録したタスクを取得する関数
     const getTasks = async () => {
       let getTasksUrl: string =
-        "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+        "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
       try {
         const response: any = await axios.get(getTasksUrl);
         setTasks(response.data);
@@ -35,7 +35,7 @@ const TaskList = () => {
   // 更新後のタスク一覧を取得する関数
   const getNewTasks = async () => {
     let getTasksUrl: string =
-      "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+      "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
     try {
       const response: any = await axios.get(getTasksUrl);
       setTasks(response.data);
@@ -46,7 +46,7 @@ const TaskList = () => {
 
   // 登録済みのタスク名に変更があったら更新する関数
   const taskNameUpdate = async (newValue: string, task: any) => {
-    let updateUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+    let updateUrl: string = "https://task-tracker-ftp3.onrender.com/tasks/" + task.id;
     try {
       await axios.patch(updateUrl, { name: newValue, user_id: user.id });
     } catch (error) {
@@ -65,7 +65,7 @@ const TaskList = () => {
 
     // 今日以降かどうか
     if (date > today) {
-      let updateUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+      let updateUrl: string = "https://task-tracker-ftp3.onrender.com/tasks/" + task.id;
       try {
         await axios.patch(updateUrl, { deadline: date, user_id: user.id });
       } catch (error) {
@@ -79,7 +79,7 @@ const TaskList = () => {
 
   // 優先度に変更が合ったら更新する関数
   const taskPriorityUpdate = async (newValue: string, task: any) => {
-    let updateUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+    let updateUrl: string = "https://task-tracker-ftp3.onrender.com/tasks/" + task.id;
     try {
       await axios.patch(updateUrl, {
         priority: Number(newValue),
@@ -93,7 +93,7 @@ const TaskList = () => {
 
   // 完了かどうかに変更が合ったら更新する関数
   const taskIsCompleteUpdate = async (newValue: string, task: any) => {
-    let updateUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+    let updateUrl: string = "https://task-tracker-ftp3.onrender.com/tasks/" + task.id;
 
     if (newValue === "true") {
       try {
@@ -123,7 +123,7 @@ const TaskList = () => {
     let result = confirm("本当に削除してよろしいですか？");
 
     if (result) {
-      let deleteUrl: string = "http://127.0.0.1:4000/tasks/" + task.id;
+      let deleteUrl: string = "https://task-tracker-ftp3.onrender.com/tasks/" + task.id;
 
       try {
         await axios.delete(deleteUrl, { data: { user_id: user.id } });

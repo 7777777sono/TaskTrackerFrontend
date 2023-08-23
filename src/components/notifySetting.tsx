@@ -18,7 +18,7 @@ const NotifySetting = () => {
     // ログインしたユーザの情報の取得をする関数
     const getLoginUser = async () => {
       let getLoginUserUrl: string =
-        "http://127.0.0.1:4000/users/" + query.userId;
+        "https://task-tracker-ftp3.onrender.com/users/" + query.userId;
       try {
         const response = await axios.get(getLoginUserUrl);
         setUser(response.data);
@@ -44,7 +44,7 @@ const NotifySetting = () => {
   const registerToken = async () => {
     try {
       let registerTokenUrl: string =
-        "http://127.0.0.1:4000/line_tokens/" + user.id;
+        "https://task-tracker-ftp3.onrender.com/line_tokens/" + user.id;
       const response: any = await axios.patch(registerTokenUrl, {
         token: token,
         user_id: user.id,
