@@ -14,7 +14,7 @@ const Home = () => {
     // ログインしたユーザの情報の取得をする関数
     const getLoginUser = async () => {
       let getLoginUserUrl: string =
-        "http://127.0.0.1:4000/users/" + query.userId;
+        "https://task-tracker-ftp3.onrender.com/users/" + query.userId;
       try {
         const response = await axios.get(getLoginUserUrl);
         setUser(response.data);

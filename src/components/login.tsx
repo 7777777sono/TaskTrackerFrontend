@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import {
@@ -7,6 +6,9 @@ import {
   useLoginUser,
   usePassword,
 } from "../context/accountManagementContext";
+import loginStyles from "../styles/form.module.scss";
+import Loading from "./loading";
+import { useIsLoading } from "../context/isLoadingContext";
 
 // ログインのためのコンポーネント
 const Login = () => {
@@ -14,17 +16,20 @@ const Login = () => {
   const [password, setPassword] = usePassword(); // パスワード
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
+  const [isLoading, setIsLoading] = useIsLoading(); // ロード中かどうかを判別する
 
   // 登録してあるユーザと入力情報が一致しているかを確認する関数
   const loginCheck = async () => {
+    setIsLoading(true);
     await postInputDatas();
+    setIsLoading(false);
   };
 
   // 入力した情報を送る関数
   const postInputDatas = async () => {
     try {
       // バックエンドでログイン処理
-      const response = await axios.post("http://127.0.0.1:4000/sessions", {
+      const response = await axios.post("https://task-tracker-ftp3.onrender.com/sessions", {
         email: email,
         password: password,
       });
@@ -38,11 +43,15 @@ const Login = () => {
 
   return (
     <>
-      <div>
+      <div className={loginStyles.form}>
+        <div>
+          <h3>Welcome</h3>
+        </div>
         {/* メール入力 */}
         <div>
-          <h4>Gmail</h4>
           <input
+            className={loginStyles.inputForm}
+            placeholder="Gmail"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -50,8 +59,9 @@ const Login = () => {
         </div>
         {/* パスワード入力 */}
         <div>
-          <h4>パスワード</h4>
           <input
+            className={loginStyles.inputForm}
+            placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -59,7 +69,9 @@ const Login = () => {
         </div>
         {/* メールとパスワードが登録したのと一致したらログインする。 */}
         <div>
-          <button onClick={loginCheck}>ログイン</button>
+          <button className={loginStyles.formButton} onClick={loginCheck}>
+            ログイン
+          </button>
         </div>
         <div>
           <Link
@@ -69,7 +81,7 @@ const Login = () => {
             }}
             legacyBehavior
           >
-            <a>パスワード忘れた方</a>
+            <a className={loginStyles.link}>パスワード忘れた方</a>
           </Link>
         </div>
         <div>
@@ -80,10 +92,11 @@ const Login = () => {
             }}
             legacyBehavior
           >
-            <a>登録はこちらから</a>
+            <a className={loginStyles.link}>登録はこちらから</a>
           </Link>
         </div>
       </div>
+      <Loading></Loading>
     </>
   );
 };

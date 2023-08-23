@@ -1,0 +1,17 @@
+@mixin width-min($width: 481px) {
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin width-min-max($min: 481px, $max: 800px) {
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin width-max($width: 480px) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}

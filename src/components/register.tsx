@@ -10,6 +10,8 @@ import {
   usePassword,
   useUserInfo,
 } from "../context/accountManagementContext";
+import registerStyles from "../styles/form.module.scss";
+import { useIsLoading } from "../context/isLoadingContext";
 
 const Register = () => {
   const [isPasswordValid, setIsPasswordValid] = useIsPasswordValid(); // パスワードの文字数が適切な文字数(5~20)なのかを判別する変数
@@ -17,6 +19,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useConfirmPassword(); // 確認用パスワード
   const [registerUserInfo, setRegisterUserInfo] = useUserInfo(); // 登録するユーザの情報を格納するオブジェクト
   const [googleAccountInfo, setGoogleAccountInfo] = useGoogleAccountInfo(); // 取得するグーグルアカウントの情報を格納しておく
+  const [isLoading, setIsLoading] = useIsLoading(); // ロード中かどうかを判別する
   const [googleAccountIsFirstRender, setGoogleAccountIsFirstRender] =
     useState(true); // (グーグルアカウントの情報のときの) 初回レンダリング時に無視するための変数
   const [registerUserIsFirstRender, setRegisterUserIsFirstRender] =
@@ -61,13 +64,15 @@ const Register = () => {
       try {
         // axios.postを使ってPOSTリクエストを送信
         const response = await axios.post(
-          "http://127.0.0.1:4000/users",
+          "https://task-tracker-ftp3.onrender.com/users",
           registerUserInfo
         );
+        setIsLoading(false);
         await alert(response.data.message);
         // 登録の処理が終了したら最初のページ戻す。
         router.push("/");
       } catch (error) {
+        setIsLoading(false);
         alert("登録失敗しました。一度ログインページに戻します。");
         router.push("/");
       }
@@ -99,15 +104,18 @@ const Register = () => {
         setGoogleAccountInfo(result.user);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.error("エラーが発生しました:", error);
       });
   };
 
   // 新規登録を行う関数
   const signup = async () => {
+    setIsLoading(true);
     if (passwordCheck()) {
       await getGoogleAccountInfo();
     } else {
+      setIsLoading(false);
       alert("パスワードが異なります。");
     }
   };
@@ -123,29 +131,44 @@ const Register = () => {
 
   return (
     <>
-      <div>
+      <div className={registerStyles.form}>
         <div>
-          <h4>下にある入力欄からパスワードを決めてください。</h4>
+          <h3 className={registerStyles.description}>
+            下にある入力欄からパスワードを決めてください。
+          </h3>
+        </div>
+        <div>
           <input
             type="password"
+            placeholder="Password"
             value={password}
+            className={registerStyles.inputForm}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
-          <h4>確認用</h4>
           <input
             type="password"
+            placeholder="Confirm Password"
             value={confirmPassword}
+            className={registerStyles.inputForm}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <div>
-          <button onClick={signup} disabled={isPasswordValid}>
+          <button
+            className={registerStyles.formButton}
+            onClick={signup}
+            disabled={isPasswordValid}
+          >
             登録
           </button>
         </div>
-        <h6>※5文字から20文字まででお願いします。</h6>
+        <div>
+          <h6 className={registerStyles.precautions}>
+            ※5文字から20文字まででお願いします。
+          </h6>
+        </div>
       </div>
     </>
   );

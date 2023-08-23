@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import NotifyTokenGetDescription from "./notifyTokenGetDescription";
 import Link from "next/link";
+import styles from "../styles/form.module.scss";
 
 const NotifySetting = () => {
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
@@ -17,7 +18,7 @@ const NotifySetting = () => {
     // ログインしたユーザの情報の取得をする関数
     const getLoginUser = async () => {
       let getLoginUserUrl: string =
-        "http://127.0.0.1:4000/users/" + query.userId;
+        "https://task-tracker-ftp3.onrender.com/users/" + query.userId;
       try {
         const response = await axios.get(getLoginUserUrl);
         setUser(response.data);
@@ -43,7 +44,7 @@ const NotifySetting = () => {
   const registerToken = async () => {
     try {
       let registerTokenUrl: string =
-        "http://127.0.0.1:4000/line_tokens/" + user.id;
+        "https://task-tracker-ftp3.onrender.com/line_tokens/" + user.id;
       const response: any = await axios.patch(registerTokenUrl, {
         token: token,
         user_id: user.id,
@@ -65,27 +66,55 @@ const NotifySetting = () => {
 
   return (
     <>
-      <div>
-        <h3>トークンを入力してください。</h3>
-        <input
-          type="text"
-          value={token}
-          onChange={(e) => {
-            setToken(e.target.value);
-          }}
-        />
-        <button onClick={registerToken}>登録</button>
-        <Link
-          href={{
-            pathname: "/",
-            query: { isLogin: isLogin, userId: user.id },
-          }}
-          legacyBehavior
-        >
-          <a>戻る</a>
-        </Link>
+      <div className={styles.form}>
+        {isLogin ? (
+          <>
+            <div>
+              <h3 className={styles.description}>
+                トークンを入力してください。
+              </h3>
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="トークン"
+                className={styles.inputForm}
+                value={token}
+                onChange={(e) => {
+                  setToken(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <button className={styles.formButton} onClick={registerToken}>
+                登録
+              </button>
+            </div>
+          </>
+        ) : (
+          <div>
+            <h3 className={styles.description}>
+              以下のリンクよりお戻りください。
+            </h3>
+          </div>
+        )}
+        <div>
+          <Link
+            href={{
+              pathname: "/",
+              query: { isLogin: isLogin, userId: user.id },
+            }}
+            legacyBehavior
+          >
+            <a className={styles.link}>戻る</a>
+          </Link>
+        </div>
       </div>
-      <NotifyTokenGetDescription></NotifyTokenGetDescription>
+      {isLogin ? (
+        <NotifyTokenGetDescription></NotifyTokenGetDescription>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

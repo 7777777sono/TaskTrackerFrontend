@@ -2,6 +2,7 @@ import Link from "next/link";
 import TaskAdd from "./taskAdd";
 import TaskList from "./taskList";
 import { useIsLogin, useLoginUser } from "../context/accountManagementContext";
+import styles from "../styles/task.module.scss";
 
 const Task = () => {
   const [isLogin, setIsLogin] = useIsLogin(); // ログインしているかどうかを判別する
@@ -11,15 +12,17 @@ const Task = () => {
     <>
       <TaskAdd></TaskAdd>
       <TaskList></TaskList>
-      <Link
-        href={{
-          pathname: "/notifySettingPage",
-          query: { isLogin: isLogin, userId: user.id },
-        }}
-        legacyBehavior
-      >
-        <a>LINEの通知設定は、こちらから</a>
-      </Link>
+      <div className={styles.linePageLinkZone}>
+        <Link
+          href={{
+            pathname: "/notifySettingPage",
+            query: { isLogin: isLogin, userId: user.id },
+          }}
+          legacyBehavior
+        >
+          <a className={styles.linePageLink}>LINEの通知設定は、こちらから</a>
+        </Link>
+      </div>
     </>
   );
 };

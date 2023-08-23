@@ -2,14 +2,37 @@ import { useEffect, useState } from "react";
 import { useTasks } from "../context/tasksContext";
 import axios from "axios";
 import { useLoginUser } from "../context/accountManagementContext";
+import styles from "../styles/task.module.scss";
 
 const TaskAdd = () => {
   const [tasks, setTasks] = useTasks(); // 追加したタスク一覧を格納する
   const [user, setUser] = useLoginUser(); // ログインしたユーザの情報を格納するオブジェクト
   const [name, setName] = useState(""); // タスクの名前
-  const [deadline, setDeadline] = useState(""); // 締切日
-  const [priority, setPriority] = useState(""); // 優先度
+  const [deadline, setDeadline] = useState(""); // 締切日(初期値は今日)
+  const [priority, setPriority] = useState(1); // 優先度
   const [isDisabled, setIsDisabled] = useState(true); // disabled属性を付与するかどうかを決める変数
+
+  useEffect(() => {
+    // 今日の日付を得る関数
+    const getTodayDate = () => {
+      const today = new Date();
+      const year: number = today.getFullYear();
+      let month: string = String(today.getMonth() + 1);
+      let day: string = String(today.getDate());
+
+      // 月と日が1桁の場合は先頭に0を追加
+      if (Number(month) < 10) {
+        month = "0" + Number(month);
+      }
+      if (Number(day) < 10) {
+        day = "0" + Number(day);
+      }
+
+      return `${year}-${month}-${day}`;
+    };
+
+    setDeadline(getTodayDate());
+  }, []);
 
   useEffect(() => {
     // disabled属性を判定する関数
@@ -36,7 +59,7 @@ const TaskAdd = () => {
   // タスクを追加する関数
   const taskAdd = async () => {
     try {
-      let postUrl: string = "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+      let postUrl: string = "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
       // バックエンドでログイン処理
       const response = await axios.post(postUrl, {
         name: name,
@@ -55,7 +78,7 @@ const TaskAdd = () => {
   // 更新後のタスク一覧を取得する関数
   const getNewTasks = async () => {
     let getTasksUrl: string =
-      "http://127.0.0.1:4000/users/" + user.id + "/tasks";
+      "https://task-tracker-ftp3.onrender.com/users/" + user.id + "/tasks";
     try {
       const response: any = await axios.get(getTasksUrl);
       setTasks(response.data);
@@ -66,39 +89,66 @@ const TaskAdd = () => {
 
   return (
     <>
-      <div>
+      <div className={styles.addZone}>
         <div>
-          <h3>タイトル</h3>
-          <h3>締め切り</h3>
-          <h3>優先度</h3>
-          <h3>完了済み？</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>締め切り</th>
+                <th>優先度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="ここにタスク名を入力"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </div>
+              </td>
+              <td>
+                <div>
+                  <input
+                    type="date"
+                    value={deadline}
+                    onChange={(e) => {
+                      setDeadline(e.target.value);
+                    }}
+                  />
+                </div>
+              </td>
+              <td>
+                <div>
+                  <label className={styles.prioritySelect}>
+                    <select
+                      value={priority}
+                      className={styles.selectZone}
+                      onChange={(e) => {
+                        setPriority(Number(e.target.value));
+                      }}
+                    >
+                      <option value={1}>高</option>
+                      <option value={2}>中</option>
+                      <option value={3}>低</option>
+                    </select>
+                  </label>
+                </div>
+              </td>
+            </tbody>
+          </table>
         </div>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <input
-          type="date"
-          value={deadline}
-          onChange={(e) => {
-            setDeadline(e.target.value);
-          }}
-        />
-        <select
-          value={priority}
-          onChange={(e) => {
-            setPriority(e.target.value);
-          }}
-        >
-          <option value={1}>高</option>
-          <option value={2}>中</option>
-          <option value={3}>低</option>
-        </select>
         <div>
-          <button onClick={taskAdd} disabled={isDisabled}>
+          <button
+            className={styles.addButton}
+            onClick={taskAdd}
+            disabled={isDisabled}
+          >
             追加
           </button>
         </div>
